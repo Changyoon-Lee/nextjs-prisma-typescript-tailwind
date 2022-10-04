@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id       Int      @id @default(autoincrement()) //유니크 식별자를 의미
+  phone    String?  @unique // ?는 필수가 아닌항목을 의미
+  email    String   @unique
+  name     String
+  password String
+  avatar   String?
+  created  DateTime @default(now())
+  updated  DateTime @updatedAt
+}
