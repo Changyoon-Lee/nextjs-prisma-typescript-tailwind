@@ -19,4 +19,26 @@ model User {
   avatar   String?
   created  DateTime @default(now())
   updated  DateTime @updatedAt
+  Post     Post[]
+  Fav      Fav[]
+}
+
+model Post {
+  id      Int      @id @default(autoincrement())
+  User    User     @relation(fields: [userId], references: [id], onDelete: Cascade) // tweet의 userid는 User db의 id임을 의미
+  userId  Int
+  message String
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+  Fav     Fav[]
+}
+
+model Fav {
+  id      Int      @id @default(autoincrement())
+  User    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  Int
+  Post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId  Int
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 }

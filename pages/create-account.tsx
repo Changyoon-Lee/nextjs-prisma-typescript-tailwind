@@ -1,6 +1,5 @@
 //계정 생성하는 페이지
 import useMutation from "@libs/client/useMutation";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 
@@ -12,7 +11,6 @@ interface CreateForm {
 }
 
 export default function CreateUser() {
-    const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = useForm<CreateForm>({
         mode: "onChange"
     });

@@ -1,17 +1,14 @@
 import { useState } from "react"
 
-interface UseMutationState {
+interface UseMutationState<T> {
     loading: boolean;
-    data?: {
-        ok: boolean;
-        error?: string;
-    };
+    data?: T;
     error?: object;
 }
-type UseMutationResult = [(data: any) => void, UseMutationState]
+type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>]
 
-export default function useMutation(url: string): UseMutationResult {
-    const [state, setState] = useState<UseMutationState>({
+export default function useMutation<T = any>(url: string): UseMutationResult<T> {
+    const [state, setState] = useState<UseMutationState<T>>({
         loading: false,
     })
     function mutation(data: any) {
@@ -24,14 +21,13 @@ export default function useMutation(url: string): UseMutationResult {
             body: JSON.stringify(data),
         }).then((response) => response.json().catch(() => { }))
             .then((json) => {
-                setState((prevState) => ({ ...prevState, data: json }));
+                setState((prevState) => ({ ...prevState, data: json, loading: false }));
                 // ...state로 받아오면 이것을 직접 수정할 수 없기 때문에 prevState를 매개변수로 받아서 값 수정한다;
-            })
-            .catch((err) => setState((prevState) => ({ ...prevState, error: err })))
-            .finally(() => setState((prevState) => ({ ...prevState, loading: false })));
-        console.log(data);
+            }).then(() => { console.log("mutation:", state) })
+            .catch((err) => setState((prevState) => ({ ...prevState, error: err, loading: false })));
+
     }
 
-    return [mutation, state]
+    return [mutation, { ...state }]
 }
 

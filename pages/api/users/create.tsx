@@ -1,7 +1,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "@libs/server/db";
-import { withHandler } from "@libs/server/withHandler";
+import withHandler from "@libs/server/withHandler";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { name, email, password } = req.body;
@@ -25,5 +25,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-export default withHandler("POST", handler);
+export default withHandler({
+    methods: ["POST"],
+    handler
+});
 //post를 handling하는 함수를 이용

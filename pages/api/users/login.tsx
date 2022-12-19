@@ -1,7 +1,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "@libs/server/db";
-import { withHandler } from "@libs/server/withHandler";
+import withHandler from "@libs/server/withHandler";
 import { withAPISession } from "@libs/server/withSession";
 
 
@@ -23,7 +23,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 id: user.id
             }
             await req.session.save();
-            console.log(req.session);
+            console.log("session:", req.session);
             res.json({ ok: true })
         }
         else {
@@ -33,7 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default withAPISession(withHandler({
-    method: "POST",
+    methods: ["POST"],
     handler,
     isPrivate: false
 }));

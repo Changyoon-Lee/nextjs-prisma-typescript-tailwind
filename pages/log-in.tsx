@@ -18,26 +18,27 @@ export default function CreateUser() {
     const [login, { loading, data, error }] = useMutation("/api/users/login");
     const onValid = (validForm: LoginForm) => {
         // backend 로 데이터 전달 되어야 함
-        console.log(validForm, "=====")
+        console.log("onvalid~~")
         login(validForm);
 
     };
-    console.log(loading, data, error);
     const onInValid = (errors: FieldErrors) => {
         console.log(errors)
     }
 
     const router = useRouter();
     useEffect(() => {
+        console.log("data::", data)
         if (data?.ok === true) {
-            router.push("/",)
+            console.log("routing to home", router)
+            router.push("/")
         } else if (data?.error) {
             alert(data?.error)
         } else {
-            console.log("what's going on?")
+            console.log("what's going on?", error)
         }
 
-    }, [data?.error, data?.ok])
+    }, [router, data])
 
     return (
         <div className="m-10">

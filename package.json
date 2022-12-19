@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "db-sync": "npx prisma migrate dev",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "deploy": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && git add out/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix out origin gh-pages"
   },
   "main": "pages/index.tsx",
   "dependencies": {
@@ -15,6 +16,7 @@
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
     "autoprefixer": "10.4.7",
+    "humbleicons": "^1.9.0",
     "iron-session": "^6.2.1",
     "next": "12.1.6",
     "postcss": "8.4.14",

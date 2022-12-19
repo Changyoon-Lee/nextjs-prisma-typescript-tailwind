@@ -1,7 +1,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "@libs/server/db";
-import { withHandler } from "@libs/server/withHandler";
+import withHandler from "@libs/server/withHandler";
 import { withAPISession } from "@libs/server/withSession";
 
 
@@ -13,21 +13,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             id: req.session.user?.id
         }
     })
-    if (profile) {
+    if (true) {
         res.json({
             ok: true,
             profile
         })
-    } else {
-        res.json({
-            ok: false
-        })
+        // } else {
+        //     res.json({
+        //         ok: false
+        //     })
     }
 }
 
 export default withAPISession(withHandler({
-    method: "GET",
+    methods: ["GET"],
     handler,
+    isPrivate: false
 }));
 //post를 handling하는 함수를 이용
 //ironsession 함수로 한번더감싸면 내부에서 session을 다룰수 있게됨
